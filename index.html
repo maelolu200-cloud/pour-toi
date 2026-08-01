@@ -150,10 +150,10 @@
     <p class="sous">Voilà ce que je te conseille 💛</p>
     <div id="conseils"></div>
 
-    <div class="q" style="margin-top:18px">📩 Envoyer à ton amoureux</div>
+    <div class="q" style="margin-top:18px">📩 Envoyer au docteur</div>
     <div class="resume" id="resume"></div>
     <div style="height:12px"></div>
-    <button class="btn" id="btnEnvoi" onclick="envoyer(this)">📩 Envoyer mes réponses à mon amoureux 💌</button>
+    <button class="btn" id="btnEnvoi" onclick="envoyer(this)">📩 Envoyer au docteur 💌</button>
     <button class="btn sec" onclick="refaire()">↩︎ Refaire</button>
 
     <p class="foot">💡 Ces conseils sont de simples astuces de confort, pas un diagnostic médical.<br>
@@ -255,7 +255,7 @@ function envoyer(btn){
     headers:{"Content-Type":"application/json","Accept":"application/json"},
     body: JSON.stringify({_subject:"💛 Ses réponses au questionnaire santé", message:t})
   }).then(r=>r.json()).then(d=>{
-    btn.textContent='✅ Envoyé à ton amoureux 💛 Repose-toi bien';
+    btn.textContent='✅ Envoyé au docteur 💛 Repose-toi bien';
   }).catch(e=>{
     btn.disabled=false;
     btn.textContent='❌ Oups, réessaie (ou copie le résumé plus bas)';
