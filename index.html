@@ -1,0 +1,265 @@
+TESTHTML123<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comment tu te sens ? 💛</title>
+<style>
+  :root{
+    --rose:#ff8fab; --rose-fonce:#e75480; --creme:#fff5f7;
+    --violet:#b892ff; --texte:#4a2c38; --doux:#ffd6e0;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:linear-gradient(160deg,#fff5f7 0%,#ffe8f0 50%,#f3e8ff 100%);
+    color:var(--texte); min-height:100vh; padding:18px;
+  }
+  .wrap{max-width:520px; margin:0 auto;}
+  .carte{
+    background:#fff; border-radius:24px; padding:26px 22px;
+    box-shadow:0 12px 40px rgba(231,84,128,.15); margin-bottom:18px;
+  }
+  h1{font-size:26px; margin:0 0 6px; color:var(--rose-fonce); text-align:center;}
+  .sous{text-align:center; color:#9b6b7c; font-size:15px; margin:0 0 8px;}
+  .q{font-weight:700; margin:22px 0 10px; font-size:16px;}
+  .q:first-of-type{margin-top:6px;}
+  .options{display:flex; flex-wrap:wrap; gap:8px;}
+  .opt{
+    border:2px solid var(--doux); background:var(--creme); color:var(--texte);
+    padding:10px 14px; border-radius:14px; font-size:15px; cursor:pointer;
+    transition:.15s; user-select:none; flex:0 0 auto;
+  }
+  .opt:active{transform:scale(.96);}
+  .opt.on{background:var(--rose); border-color:var(--rose-fonce); color:#fff; font-weight:700;}
+  input[type=text],textarea,select{
+    width:100%; border:2px solid var(--doux); border-radius:14px; padding:12px;
+    font-size:15px; font-family:inherit; background:var(--creme); color:var(--texte);
+  }
+  textarea{min-height:70px; resize:vertical;}
+  .btn{
+    display:block; width:100%; border:none; border-radius:18px; padding:16px;
+    font-size:17px; font-weight:800; color:#fff; cursor:pointer; margin-top:8px;
+    background:linear-gradient(120deg,var(--rose),var(--violet)); box-shadow:0 8px 22px rgba(184,146,255,.4);
+  }
+  .btn:active{transform:scale(.98);}
+  .btn.sec{background:#fff; color:var(--rose-fonce); border:2px solid var(--rose);}
+  #resultat{display:none;}
+  .conseil{background:var(--creme); border-left:5px solid var(--rose); border-radius:12px; padding:14px 16px; margin:12px 0; font-size:15px; line-height:1.5;}
+  .conseil b{color:var(--rose-fonce);}
+  .alerte{background:#fff0f0; border-left:5px solid #e63946; border-radius:12px; padding:14px 16px; margin:12px 0; font-size:15px; line-height:1.5;}
+  .alerte b{color:#c1121f;}
+  .resume{background:#f6f0ff; border-radius:14px; padding:14px 16px; font-size:14px; white-space:pre-wrap; line-height:1.5;}
+  .foot{text-align:center; font-size:12px; color:#b58a99; margin-top:14px; line-height:1.5;}
+  .coeur{font-size:34px; text-align:center; margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="carte" id="form">
+    <div class="coeur">🤒💛</div>
+    <h1>Comment tu te sens ?</h1>
+    <p class="sous">Coche tout ce que tu ressens, mon cœur.<br>À la fin j'te dis quoi faire 🥰</p>
+
+    <div class="q">1. Depuis quand tu es malade ?</div>
+    <div class="options" data-q="depuis" data-mono>
+      <div class="opt">Aujourd'hui</div>
+      <div class="opt">1-2 jours</div>
+      <div class="opt">3-4 jours</div>
+      <div class="opt">Plus longtemps</div>
+    </div>
+
+    <div class="q">2. Température / fièvre ?</div>
+    <div class="options" data-q="fievre" data-mono>
+      <div class="opt">Pas de fièvre</div>
+      <div class="opt">Un peu chaude</div>
+      <div class="opt">Fièvre (+38°)</div>
+      <div class="opt">Grosse fièvre (+39,5°)</div>
+    </div>
+
+    <div class="q">3. Tu ressens quoi ? (plusieurs choix)</div>
+    <div class="options" data-q="etat">
+      <div class="opt">Frissons / froid</div>
+      <div class="opt">Chaud / je transpire</div>
+      <div class="opt">Courbatures</div>
+      <div class="opt">Grosse fatigue</div>
+    </div>
+
+    <div class="q">4. Nez</div>
+    <div class="options" data-q="nez" data-mono>
+      <div class="opt">Rien</div>
+      <div class="opt">Qui coule</div>
+      <div class="opt">Bouché</div>
+    </div>
+
+    <div class="q">5. Gorge</div>
+    <div class="options" data-q="gorge" data-mono>
+      <div class="opt">Rien</div>
+      <div class="opt">Ça pique</div>
+      <div class="opt">Mal quand j'avale</div>
+    </div>
+
+    <div class="q">6. Toux</div>
+    <div class="options" data-q="toux" data-mono>
+      <div class="opt">Pas de toux</div>
+      <div class="opt">Toux sèche</div>
+      <div class="opt">Toux grasse</div>
+    </div>
+
+    <div class="q">7. Mal de tête ?</div>
+    <div class="options" data-q="tete" data-mono>
+      <div class="opt">Non</div>
+      <div class="opt">Un peu</div>
+      <div class="opt">Fort</div>
+    </div>
+
+    <div class="q">8. Ventre / digestion (plusieurs choix)</div>
+    <div class="options" data-q="ventre">
+      <div class="opt">Rien</div>
+      <div class="opt">Mal au ventre</div>
+      <div class="opt">Nausées</div>
+      <div class="opt">Vomissements</div>
+      <div class="opt">Diarrhée</div>
+    </div>
+
+    <div class="q">9. Tu arrives à manger et boire ?</div>
+    <div class="options" data-q="manger" data-mono>
+      <div class="opt">Oui normalement</div>
+      <div class="opt">Un peu</div>
+      <div class="opt">Presque pas</div>
+    </div>
+
+    <div class="q">10. Tu as du mal à respirer ?</div>
+    <div class="options" data-q="respire" data-mono>
+      <div class="opt">Non ça va</div>
+      <div class="opt">Un peu essoufflée</div>
+      <div class="opt">Oui vraiment</div>
+    </div>
+
+    <div class="q">11. Autre chose ? (allergie, médoc déjà pris, un truc bizarre...)</div>
+    <textarea id="autre" placeholder="Écris ici si tu veux 💬"></textarea>
+
+    <div style="height:18px"></div>
+    <button class="btn" onclick="analyser()">Voir mes conseils 💊✨</button>
+  </div>
+
+  <div class="carte" id="resultat">
+    <div class="coeur">🥰</div>
+    <h1>Prends soin de toi</h1>
+    <p class="sous">Voilà ce que je te conseille 💛</p>
+    <div id="conseils"></div>
+
+    <div class="q" style="margin-top:18px">📩 À envoyer à ton amoureux</div>
+    <div class="resume" id="resume"></div>
+    <div style="height:12px"></div>
+    <button class="btn" onclick="copier()">📋 Copier le résumé</button>
+    <button class="btn sec" onclick="refaire()">↩︎ Refaire</button>
+
+    <p class="foot">💡 Ces conseils sont de simples astuces de confort, pas un diagnostic médical.<br>
+    En cas de fièvre forte, de gêne pour respirer, de douleur intense ou si ça dure plus de quelques jours → consulte un médecin ou un pharmacien.</p>
+  </div>
+
+  <p class="foot">Fait avec 💛 rien que pour toi</p>
+</div>
+
+<script>
+const rep = {etat:[], ventre:[]};
+
+document.querySelectorAll('.options').forEach(grp=>{
+  const q = grp.dataset.q;
+  const mono = grp.hasAttribute('data-mono');
+  grp.querySelectorAll('.opt').forEach(o=>{
+    o.addEventListener('click',()=>{
+      if(mono){
+        grp.querySelectorAll('.opt').forEach(x=>x.classList.remove('on'));
+        o.classList.add('on');
+        rep[q]=o.textContent;
+      } else {
+        o.classList.toggle('on');
+        rep[q]=[...grp.querySelectorAll('.opt.on')].map(x=>x.textContent);
+      }
+    });
+  });
+});
+
+function has(arr,txt){return Array.isArray(arr)&&arr.includes(txt);}
+
+function analyser(){
+  const c=[]; const urgent=[];
+  const autre=document.getElementById('autre').value.trim();
+
+  if(rep.respire==='Oui vraiment') urgent.push("Tu as vraiment du mal à respirer — <b>ne reste pas seule avec ça</b>, appelle un médecin ou le 15 (SAMU) sans attendre.");
+  if(rep.fievre==='Grosse fièvre (+39,5°)') urgent.push("Ta fièvre est très haute — si elle ne descend pas avec du paracétamol, <b>consulte un médecin aujourd'hui</b>.");
+  if(rep.manger==='Presque pas' && (has(rep.ventre,'Vomissements')||has(rep.ventre,'Diarrhée'))) urgent.push("Tu n'arrives presque plus à boire alors que tu perds de l'eau — <b>attention à la déshydratation</b>. Bois par toutes petites gorgées et vois un médecin si ça continue.");
+
+  c.push("<b>Repose-toi</b> au maximum et reste au chaud. Ton corps se bat, laisse-le faire 💤");
+  c.push("<b>Bois beaucoup</b> : eau, tisanes, bouillon, un thé au miel-citron. Petit à petit toute la journée.");
+
+  if(rep.fievre && rep.fievre!=='Pas de fièvre' || has(rep.etat,'Courbatures') || rep.tete==='Fort' || rep.tete==='Un peu'){
+    c.push("Pour la <b>fièvre, les courbatures et le mal de tête</b> : du <b>paracétamol</b> (type Doliprane) peut te soulager. Respecte bien la dose sur la boîte et espace de 6h. (Évite l'ibuprofène si tu n'es pas sûre, demande au pharmacien.)");
+  }
+  if(has(rep.etat,'Frissons / froid')) c.push("Tu as des frissons : couvre-toi bien, une couverture + une bouillotte, ça aide à te sentir mieux 🧣");
+  if(has(rep.etat,'Chaud / je transpire')) c.push("Tu transpires : ne te couvre pas trop non plus, garde une tenue légère et change-toi si tu es trempée.");
+
+  if(rep.nez==='Qui coule'||rep.nez==='Bouché') c.push("Pour le <b>nez</b> : sérum physiologique ou spray d'eau de mer pour nettoyer, et un mouchoir jetable à chaque fois. Un bol d'eau chaude / une douche vapeur débouche bien.");
+  if(rep.gorge==='Ça pique'||rep.gorge==='Mal quand j'avale') c.push("Pour la <b>gorge</b> : boissons chaudes miel-citron, pastilles pour la gorge, et évite de trop parler. Si c'est très rouge avec de la fièvre, montre ta gorge à un pharmacien.");
+  if(rep.toux==='Toux sèche') c.push("<b>Toux sèche</b> : le miel calme bien, et l'air humide aussi. Si ça t'empêche de dormir, un sirop pour toux sèche en pharmacie.");
+  if(rep.toux==='Toux grasse') c.push("<b>Toux grasse</b> : c'est plutôt bon signe, ça évacue. Bois bien pour fluidifier, et ne prends PAS de sirop qui bloque la toux.");
+
+  if(has(rep.ventre,'Mal au ventre')||has(rep.ventre,'Nausées')||has(rep.ventre,'Vomissements')||has(rep.ventre,'Diarrhée')){
+    c.push("Pour le <b>ventre</b> : mange léger (riz, banane, compote, bouillon), évite le gras, le lait et les trucs acides. Bois souvent en petites quantités.");
+    if(has(rep.ventre,'Diarrhée')) c.push("Diarrhée : pense à te réhydrater ++ (eau, bouillon salé). Un sachet de réhydratation en pharmacie peut aider.");
+  }
+
+  if(has(rep.etat,'Grosse fatigue')) c.push("Grosse fatigue : c'est normal quand on est malade. Zéro culpabilité, tu poses tout et tu dors 🛌");
+
+  if(autre) c.push("Tu as noté : « "+autre+" » — parles-en au pharmacien ou au médecin pour être sûre, surtout si c'est une allergie ou un médoc.");
+
+  let html='';
+  urgent.forEach(u=>html+='<div class="alerte">⚠️ '+u+'</div>');
+  c.forEach(x=>html+='<div class="conseil">'+x+'</div>');
+  document.getElementById('conseils').innerHTML=html;
+
+  let r='💛 Voilà comment je me sens :
+
+';
+  const L=(k,v)=>{ if(v && v.length) r+='• '+k+' : '+(Array.isArray(v)?v.join(', '):v)+'
+'; };
+  L('Depuis',rep.depuis); L('Fièvre',rep.fievre); L('État',rep.etat);
+  L('Nez',rep.nez); L('Gorge',rep.gorge); L('Toux',rep.toux);
+  L('Tête',rep.tete); L('Ventre',rep.ventre); L('Manger/boire',rep.manger);
+  L('Respiration',rep.respire);
+  if(autre) r+='• Autre : '+autre+'
+';
+  if(urgent.length) r+='
+⚠️ Il y a un point à surveiller, appelle-moi 🥺';
+  r+='
+
+Je me repose 💤 je t'aime ❤️';
+  document.getElementById('resume').textContent=r;
+
+  document.getElementById('form').style.display='none';
+  document.getElementById('resultat').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function copier(){
+  const t=document.getElementById('resume').textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    event.target.textContent='✅ Copié ! Colle-le dans ton message';
+  }).catch(()=>{
+    const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); ta.remove();
+    event.target.textContent='✅ Copié !';
+  });
+}
+
+function refaire(){
+  document.getElementById('resultat').style.display='none';
+  document.getElementById('form').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
