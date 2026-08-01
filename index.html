@@ -1,4 +1,4 @@
-TESTHTML123<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -189,54 +189,57 @@ function analyser(){
   const c=[]; const urgent=[];
   const autre=document.getElementById('autre').value.trim();
 
+  // ----- URGENCES -----
   if(rep.respire==='Oui vraiment') urgent.push("Tu as vraiment du mal à respirer — <b>ne reste pas seule avec ça</b>, appelle un médecin ou le 15 (SAMU) sans attendre.");
   if(rep.fievre==='Grosse fièvre (+39,5°)') urgent.push("Ta fièvre est très haute — si elle ne descend pas avec du paracétamol, <b>consulte un médecin aujourd'hui</b>.");
   if(rep.manger==='Presque pas' && (has(rep.ventre,'Vomissements')||has(rep.ventre,'Diarrhée'))) urgent.push("Tu n'arrives presque plus à boire alors que tu perds de l'eau — <b>attention à la déshydratation</b>. Bois par toutes petites gorgées et vois un médecin si ça continue.");
 
+  // ----- CONSEILS GÉNÉRAUX -----
   c.push("<b>Repose-toi</b> au maximum et reste au chaud. Ton corps se bat, laisse-le faire 💤");
   c.push("<b>Bois beaucoup</b> : eau, tisanes, bouillon, un thé au miel-citron. Petit à petit toute la journée.");
 
+  // Fièvre / frissons / courbatures
   if(rep.fievre && rep.fievre!=='Pas de fièvre' || has(rep.etat,'Courbatures') || rep.tete==='Fort' || rep.tete==='Un peu'){
     c.push("Pour la <b>fièvre, les courbatures et le mal de tête</b> : du <b>paracétamol</b> (type Doliprane) peut te soulager. Respecte bien la dose sur la boîte et espace de 6h. (Évite l'ibuprofène si tu n'es pas sûre, demande au pharmacien.)");
   }
   if(has(rep.etat,'Frissons / froid')) c.push("Tu as des frissons : couvre-toi bien, une couverture + une bouillotte, ça aide à te sentir mieux 🧣");
   if(has(rep.etat,'Chaud / je transpire')) c.push("Tu transpires : ne te couvre pas trop non plus, garde une tenue légère et change-toi si tu es trempée.");
 
+  // Nez
   if(rep.nez==='Qui coule'||rep.nez==='Bouché') c.push("Pour le <b>nez</b> : sérum physiologique ou spray d'eau de mer pour nettoyer, et un mouchoir jetable à chaque fois. Un bol d'eau chaude / une douche vapeur débouche bien.");
+  // Gorge
   if(rep.gorge==='Ça pique'||rep.gorge==='Mal quand j'avale') c.push("Pour la <b>gorge</b> : boissons chaudes miel-citron, pastilles pour la gorge, et évite de trop parler. Si c'est très rouge avec de la fièvre, montre ta gorge à un pharmacien.");
+  // Toux
   if(rep.toux==='Toux sèche') c.push("<b>Toux sèche</b> : le miel calme bien, et l'air humide aussi. Si ça t'empêche de dormir, un sirop pour toux sèche en pharmacie.");
   if(rep.toux==='Toux grasse') c.push("<b>Toux grasse</b> : c'est plutôt bon signe, ça évacue. Bois bien pour fluidifier, et ne prends PAS de sirop qui bloque la toux.");
 
+  // Ventre
   if(has(rep.ventre,'Mal au ventre')||has(rep.ventre,'Nausées')||has(rep.ventre,'Vomissements')||has(rep.ventre,'Diarrhée')){
     c.push("Pour le <b>ventre</b> : mange léger (riz, banane, compote, bouillon), évite le gras, le lait et les trucs acides. Bois souvent en petites quantités.");
     if(has(rep.ventre,'Diarrhée')) c.push("Diarrhée : pense à te réhydrater ++ (eau, bouillon salé). Un sachet de réhydratation en pharmacie peut aider.");
   }
 
+  // Fatigue
   if(has(rep.etat,'Grosse fatigue')) c.push("Grosse fatigue : c'est normal quand on est malade. Zéro culpabilité, tu poses tout et tu dors 🛌");
 
   if(autre) c.push("Tu as noté : « "+autre+" » — parles-en au pharmacien ou au médecin pour être sûre, surtout si c'est une allergie ou un médoc.");
 
+  // ----- AFFICHAGE -----
   let html='';
   urgent.forEach(u=>html+='<div class="alerte">⚠️ '+u+'</div>');
   c.forEach(x=>html+='<div class="conseil">'+x+'</div>');
   document.getElementById('conseils').innerHTML=html;
 
-  let r='💛 Voilà comment je me sens :
-
-';
-  const L=(k,v)=>{ if(v && v.length) r+='• '+k+' : '+(Array.isArray(v)?v.join(', '):v)+'
-'; };
+  // ----- RESUME -----
+  let r='💛 Voilà comment je me sens :\n\n';
+  const L=(k,v)=>{ if(v && v.length) r+='• '+k+' : '+(Array.isArray(v)?v.join(', '):v)+'\n'; };
   L('Depuis',rep.depuis); L('Fièvre',rep.fievre); L('État',rep.etat);
   L('Nez',rep.nez); L('Gorge',rep.gorge); L('Toux',rep.toux);
   L('Tête',rep.tete); L('Ventre',rep.ventre); L('Manger/boire',rep.manger);
   L('Respiration',rep.respire);
-  if(autre) r+='• Autre : '+autre+'
-';
-  if(urgent.length) r+='
-⚠️ Il y a un point à surveiller, appelle-moi 🥺';
-  r+='
-
-Je me repose 💤 je t'aime ❤️';
+  if(autre) r+='• Autre : '+autre+'\n';
+  if(urgent.length) r+='\n⚠️ Il y a un point à surveiller, appelle-moi 🥺';
+  r+='\n\nJe me repose 💤 je t\'aime ❤️';
   document.getElementById('resume').textContent=r;
 
   document.getElementById('form').style.display='none';
