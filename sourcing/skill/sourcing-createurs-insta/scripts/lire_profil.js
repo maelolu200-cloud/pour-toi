@@ -1,6 +1,6 @@
 // Lecture d'un profil Instagram en UN seul appel javascript_tool.
 // À coller tel quel après navigate sur https://www.instagram.com/<pseudo>/
-// Renvoie : pseudo, texte du header, liens externes, vérifié, privé, similaires.
+// Renvoie : pseudo, texte du header, liens externes, vérifié, privé, photo de profil, bio faceless, similaires.
 // Aucune action sociale : il ne fait que lire et ouvrir le panneau « Comptes similaires ».
 (async () => {
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -21,6 +21,10 @@
   const texte = header.innerText.replace(/\n{2,}/g, '\n').trim();
   const verifie = !!header.querySelector('svg[aria-label="Vérifié"], svg[aria-label="Verified"]');
   const prive = /Ce compte est privé|This account is private/i.test(bodyText);
+  // Photo de profil (à regarder si la capture d'écran ne suffit pas) + bio qui annonce un compte sans visage.
+  const imgProfil = header.querySelector('img[alt*="photo de profil" i], img[alt*="profile picture" i]') || header.querySelector('img');
+  const photo = imgProfil ? imgProfil.src : '';
+  const faceless = /faceless|sans (mon )?visage|no face|pas (mon|de) visage|je ne montre pas mon visage/i.test(texte);
 
   // 2. Liens externes (Instagram les emballe dans l.instagram.com/?u=...).
   const liens = [...new Set(
@@ -56,5 +60,5 @@
     }
   }
 
-  return { pseudo, verifie, prive, texte, liens, similaires };
+  return { pseudo, verifie, prive, faceless, photo, texte, liens, similaires };
 })();
