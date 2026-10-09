@@ -1,6 +1,6 @@
 ---
 name: "sourcing-createurs-insta"
-description: "Trouve sur Instagram des créatrices FR de moins de 30k avec OnlyFans/MYM (ou Reveal, Patreon…), qui montrent leur visage, sans agence et pas porno, par effet boule de neige via les « comptes similaires » d'Instagram, et les liste dans un Google Sheet (plateforme, redirection bonne/mauvaise). Rythme visé 100 créatrices en 2 h. À utiliser dès que Maël parle de trouver des modèles, des créatrices, des prospects OFM, de sourcing Insta ou de remplir sa liste de DM."
+description: "Trouve sur Instagram des créatrices FR de moins de 30k avec OnlyFans/MYM (ou Reveal, Patreon…), qui montrent leur visage, sans agence et pas porno, par effet boule de neige via les « comptes similaires » d'Instagram, et les liste dans un Google Sheet (plateforme, redirection bonne/mauvaise). Chaque lancement repart du dernier Sheet « Prospects OFM » et ajoute 100 nouvelles créatrices (rythme visé : 2 h). À utiliser dès que Maël parle de trouver des modèles, des créatrices, des prospects OFM, de sourcing Insta ou de remplir sa liste de DM."
 ---
 
 # Sourcing créatrices Instagram
@@ -12,6 +12,14 @@ Maël veut passer ses journées à envoyer des DM, pas à chercher qui DM. Ce sk
 Une créatrice qui a déjà une agence ne sert à rien à Maël : c'est un DM perdu.
 
 **Ce skill ne fait que chercher et lister.** Il n'envoie jamais de message, ne suit personne, ne like rien. Maël fait les DM lui-même.
+
+## Objectif par lancement : 100 nouvelles, à partir du dernier Sheet
+
+À chaque lancement, sans rien demander à Maël :
+1. Trouve dans Google Drive le **dernier** fichier `Prospects OFM (à jour N)` (le N le plus grand) et lis-le en entier.
+2. Ses pseudos servent à la fois de **liste « déjà vus »** (on ne les redonne jamais) et de **points de départ** pour l'effet boule de neige.
+3. Le lancement s'arrête quand **100 nouvelles créatrices** (absentes du dernier Sheet) sont gardées. Les anciennes ne comptent pas dans les 100.
+4. Si aucun Sheet `Prospects OFM` n'existe, demande 5 à 10 pseudos de départ à Maël, puis continue normalement.
 
 ## Objectif de rythme : 100 en 2 h
 
@@ -94,8 +102,13 @@ Ces règles existent parce que le temps part surtout dans des profils ouverts po
 ## Déroulé
 
 ### 1. Points de départ
-- Pseudos donnés par Maël (créatrices indépendantes déjà contactées). Sinon, demande-en 5 à 10.
-- **Uniquement des créatrices avec visage.** Si un pseudo de départ est faceless, ne l'explore pas et dis-le à Maël : ses « similaires » seront faceless aussi.
+- **Le dernier Sheet `Prospects OFM (à jour N)`.** Ne demande pas de pseudos à Maël s'il existe (voir « Objectif par lancement »). Ordre de passage dans la file :
+  1. les créatrices avec Visage « Oui » et Statut « OK » ;
+  2. les plus récentes du Sheet (colonne « Ajoutée le », sinon le bas de la liste) : leurs similaires sont moins exploités ;
+  3. le reste. Les anciennes lignes sans colonne Visage : le visage est vérifié à leur ouverture, comme pour un nouveau profil.
+- Un point de départ déjà exploré lors d'un lancement précédent rapporte moins : si ses similaires ne donnent rien de nouveau, passe au suivant sans insister.
+- Pseudos donnés en plus par Maël : passe-les en tête de file.
+- **Uniquement des créatrices avec visage.** Si un pseudo de départ est faceless, ne l'explore pas (ses « similaires » seront faceless aussi) et compte-le dans le compte rendu, sans interrompre Maël.
 - Les listes d'abonnements (« suivi(e)s ») rapportent peu : les créatrices suivent surtout leurs amis, des strip-teaseuses ou des comptes musique/tatouage. **N'utilise les abonnements qu'en dernier recours.**
 
 ### 2. Effet boule de neige : les « comptes similaires »
@@ -116,14 +129,16 @@ Un coin est épuisé quand **2 lots de suite** donnent moins de 3 gardées (surt
 
 ### 6. Google Sheet
 - Google Drive `create_file` en CSV (`contentMimeType: text/csv`), titre `Prospects OFM (à jour N)`.
-- Le connecteur ne sait pas modifier un Sheet existant : chaque mise à jour = un nouveau fichier qui reprend **toute** la liste. Dis à Maël lequel est le bon.
-- Colonnes : `Pseudo | Lien profil | Abonnés | Plateforme | Lien plateforme | Redirection | Visage | Trouvée via | Statut | Notes`. Visage = « Oui » ou « À vérifier ». Mets les « Oui » en premier.
+- Le connecteur ne sait pas modifier un Sheet existant : chaque mise à jour = un nouveau fichier `Prospects OFM (à jour N+1)` qui reprend **toute** la liste (anciennes + nouvelles), pour que le prochain lancement reparte de ce fichier. Dis à Maël lequel est le bon.
+- **Les nouvelles de ce lancement en haut**, puis les anciennes dans l'ordre du Sheet précédent. Ne modifie pas les anciennes lignes, sauf pour remplir leur colonne Visage si tu l'as vérifiée en passant.
+- Colonnes : `Pseudo | Lien profil | Abonnés | Plateforme | Lien plateforme | Redirection | Visage | Trouvée via | Statut | Ajoutée le | Notes`. Visage = « Oui » ou « À vérifier ». « Ajoutée le » = date du lancement (AAAA-MM-JJ) ; laisse-la vide pour les anciennes lignes qui n'en ont pas. Parmi les nouvelles, mets les Visage « Oui » en premier.
 - Livre un Sheet toutes les **~25 nouvelles créatrices** (au lieu de 15-20 : moins d'interruptions, Maël a quand même de quoi DM en parallèle).
 
 ## Compte rendu (format TDAH, court)
 
 ```
-✅ [N] créatrices dans le Sheet → [lien]
+✅ [N]/100 nouvelles créatrices (total [T] dans le Sheet) → [lien]
+📂 parti de : Prospects OFM (à jour [K]) → nouveau : (à jour [K+1])
 ⏱️ [X] min écoulées — rythme [Y]/h (objectif 50/h)
 🚫 écartées : [A] agence/tunnel, [B] >30k, [C] porno, [D] déjà vues, [E] sans visage
 ⚠️ [seulement si besoin]
